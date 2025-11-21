@@ -1,0 +1,47 @@
+﻿@{
+    Layout = null;
+}
+@model List<CartProduct>
+<div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <td class="text-center">تصویر</td>
+                    <td class="text-left">نام محصول</td>
+                    <td class="text-left">دسته</td>
+                    <td class="text-left">تعداد</td>
+                    <td class="text-left">لینک</td>
+                    <td class="text-right">قیمت واحد</td>
+                    <td class="text-right">کل</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center"><a href="product.html"><img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item.product.Img)}")" width="50" height="40" alt="تبلت ایسر" title="تبلت ایسر" class="img-thumbnail"></a></td>
+                        <td class="text-left">
+                            <a href="product.html">@item.product.Name</a><br>
+                            @*<small>امتیازات خرید: 1000</small>*@
+                        </td>
+                        <td class="text-left">@item.product.group1.Name</td>
+                        <td class="text-left col-md-2">
+                            <div class="input-group btn-block quantity ">
+                                <input id="CartProductCount" CartProductIdd="@item.Id" class="form-control input-number__input" type="number" name="quantity" value="@item.Count" max="@item.product.Count" min="1">
+                                @*<span class="input-group-btn">
+                                        <button type="submit" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="بروزرسانی"><i class="fa fa-refresh"></i></button>
+                                        <button id="BtnRemoveFromeCartProduct" CartProductId="@item.Id" type="button" data-toggle="tooltip" title="" class="btn btn-danger" onclick="" data-original-title="حذف"><i class="fa fa-times-circle"></i></button>
+                                    </span>*@
+                            </div>
+                        </td>
+                        <td class="text-left"><a asp-action="DownloadFile" asp-controller="Cart" asp-route-ProductId="@item.ProductId">لینک دانلود</a></td>
+                        <td class="text-right">@($"{item.product.Price:0,0}") تومان</td>
+                        <td class="text-right custom-control-input">@($"{item.product.Price * item.Count:0,0}") تومان</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

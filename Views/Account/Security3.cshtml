@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewData["Title"] = "Security1";
+}
+@model UserRegistryViewModel
+<div class="col-md-12 d-flex mt-4 mt-md-0">
+    <div class="card flex-grow-1 mb-0">
+        <div class="card-body">
+            <h3 class="card-title">تغییر رمز عبور</h3>
+            <form asp-action="Security4" asp-controller="Account" >
+
+                <div class="form-group">
+                    <label>رمز عبور جدید</label>
+                    <input asp-for="Pass" type="password" class="form-control" placeholder="رمز عبور را وارد کنید">
+                    <span asp-validation-for="Pass"></span>
+
+                </div>
+                <div class="form-group">
+                    <label>تکرار رمز عبور</label>
+                    <input asp-for="RePass" type="password" class="form-control" placeholder="رمز عبور را وارد کنید">
+                    <span asp-validation-for="RePass"></span>
+
+                </div>
+                <button type="submit" class="btn btn-success mt-4">ثبت</button>
+            </form>
+        </div>
+    </div>
+</div>

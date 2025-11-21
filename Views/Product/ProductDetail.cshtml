@@ -1,0 +1,382 @@
+﻿
+@{
+    ViewData["Title"] = "ProductDetail";
+}
+@model ProductCommentViewModel
+
+<link href="~/css/Heartstyle.css" rel="stylesheet" />
+<div id="container">
+    <div class="container">
+        <!-- Breadcrumb Start-->
+        <ul class="breadcrumb">
+            <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="index.html" itemprop="url"><span itemprop="title"><i class="fa fa-home"></i></span></a></li>
+            <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="category.html" itemprop="url"><span itemprop="title">الکترونیکی</span></a></li>
+            <li itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="product.html" itemprop="url"><span itemprop="title">لپ تاپ ایلین ور</span></a></li>
+        </ul>
+        <!-- Breadcrumb End-->
+        <!--Middle Part Start-->
+        <div id="content" class="col-sm-9">
+            <div itemscope="" itemtype="http://schema.org/محصولات">
+                <h1 class="title" itemprop="name">@(((Product)ViewData["product"]).Name)</h1>
+                <div class="row product-info">
+                    <div class="col-sm-6">
+                        <div class="image"><div style="height:350px;width:350px;" class="zoomWrapper"><img class="img-responsive" itemprop="image" id="zoom_01" src="@($"data:image/jpeg;base64,{Convert.ToBase64String(((Product)ViewData["product"]).Img)}")" title="لپ تاپ ایلین ور" alt="لپ تاپ ایلین ور" data-zoom-image="image/product/macbook_air_1-500x500.jpg" style="position: absolute;"></div> </div>
+                        <div class="center-block text-center"></div>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <ul class="list-unstyled description">
+                            <li><h>دسته :</h> <span itemprop="brand"><h>@(((Product)ViewData["product"]).group1.Name)</h></span></li>
+                            @*<li><b>کد محصول :</b> <span itemprop="mpn">محصولات 17</span></li>*@
+                            @*<li><b>امتیازات خرید:</b> 700</li>*@
+                            @*<li><b>وضعیت موجودی :</b> <span class="instock">موجود</span></li>*@
+                        </ul>
+                        <ul class="price-box">
+                            <li class="price" itemprop="offers" itemscope="" itemtype="http://schema.org/Offer">@*<span class="price-old">12 میلیون تومان</span>*@ <span itemprop="price">@($"{((Product)ViewData["product"]).Price:0,0}") تومان<span itemprop="availability" content="موجود"></span></span></li>
+                            <li></li>
+                            @*<li>بدون مالیات : 9 میلیون تومان</li>*@
+                        </ul>
+                        <div id="product">
+
+
+                            <div class="cart">
+                                <div>
+                                    <form asp-action="InsertCart" asp-route-ProductId="@(((Product)ViewData["product"]).Id)" asp-controller="Cart" data-ajax="true" data-ajax-complete="b1" data-ajax-method="post">
+
+                                        <button id="btn1" class="btn-primary button-group" style="" type="submit" onclick=""><span id="span1">افزودن به سبد</span></button>
+                                    </form>
+
+                                </div>
+
+                                <div>
+
+                                    @if ((ViewData["ProductLike"] as ProductLike) != null)
+                                    {
+
+                                        <input checked="checked" productId="@(((Product)ViewData["product"]).Id)" style="margin-right:20px" type="checkbox" name="cbG06" id="cbG06" class="css-checkbox"><label for="cbG06" class="css-label cb0"><h style="font-size:medium" id="NumLike">@ViewData["Plike"]</h></label>
+                                    }
+                                    else
+                                    {
+                                        <input productId="@(((Product)ViewData["product"]).Id)" style="margin-right:20px" type="checkbox" name="cbG06" id="cbG06" class="css-checkbox"><label for="cbG06" class="css-label cb0"><h style="font-size:medium" id="NumLike">@ViewData["Plike"]</h></label>
+
+                                    }
+
+                                </div>
+                                @*<button type="button" class="wishlist" onclick=""><i class="fa fa-heart"></i> افزودن به علاقه مندی ها</button>
+                                    <br>
+                                    <button type="button" class="wishlist" onclick=""><i class="fa fa-exchange"></i> مقایسه این محصول</button>*@
+                            </div>
+                        </div>
+                    </div>
+                    @*نمایش امتیاز*@
+                    @*<div class="rating" itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating">
+                            <meta itemprop="ratingValue" content="0">
+                            <p><span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span> <a onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;" href=""><span itemprop="reviewCount">1 بررسی</span></a> / <a onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;" href="">یک بررسی بنویسید</a></p>
+                        </div>*@
+                    <hr>
+                    <!-- AddThis Button BEGIN -->
+                    @*<div class="addthis_toolbox addthis_default_style"> <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_google_plusone" g:plusone:size="medium"></a> <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal" pi:pinit:url="http://www.addthis.com/features/pinterest" pi:pinit:media="http://www.addthis.com/cms-content/images/features/pinterest-lg.png"></a> <a class="addthis_counter addthis_pill_style"></a> </div>
+                        <script id="twitter-wjs" src="https://platform.twitter.com/widgets.js"></script>
+                        <script id="facebook-jssdk" src="//connect.facebook.net/en_US/sdk.js#xfbml=1&amp;version=v2.4"></script>
+                        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-514863386b357649"></script>*@
+                    <!-- AddThis Button END -->
+                </div>
+            </div>
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab-description" data-toggle="tab">توضیحات</a></li>
+                <li><a href="#tab-specification" data-toggle="tab">مشخصات</a></li>
+                <li><a class="a-button" ProductId="@(((Product)ViewData["product"]).Id)" href="#tab-review" data-toggle="tab">بررسی </a></li>
+            </ul>
+
+
+            <div class="tab-content">
+                <div itemprop="description" id="tab-description" class="tab-pane active">
+                    <div>
+                        <pre>@(((Product)ViewData["product"]).Abstract)</pre>
+                        @*<p>مک بوک جدید با پردازشگر اینتل core i7 از همیشه سریعتر ظاهر شده و آماده است که گوی سبقت را از رقبا بگیرد.</p>
+                            <p><b>16 گیگابایت رم و هارد دیسک های بزرگتر</b></p>
+                            <p>ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
+                            <p><b>طراحی خارق العاده و بی نظیر</b></p>
+                            <p>مک بوک در واقع ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>
+                            <p><b>با دوربین i-Sight درون ساخت</b></p>
+                            <p>بدون نیاز به ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.</p>*@
+                    </div>
+                </div>
+                <div id="tab-specification" class="tab-pane">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td colspan="2"><strong>حافظه</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>تست 1</td>
+                                <td>8gb</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td colspan="2"><strong>پردازشگر</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>تعداد هسته</td>
+                                <td>1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="tab-review" class="tab-pane">
+                    <div id="review">
+                        <div id="div1">
+
+                        </div>
+                        <div class="text-right"></div>
+                    </div>
+                    <form class="form-horizontal" asp-action="InsertComment" asp-controller="Product" asp-route-ProductId="@(((Product)ViewData["product"]).Id) " data-ajax="true" data-ajax-complete="F1">
+                        <h2>یک بررسی بنویسید</h2>
+                        @*<div class="form-group required">
+                                <div class="col-sm-12">
+                                    <label for="input-name" class="control-label">نام شما</label>
+                                    <input type="text" class="form-control" id="input-name" value="" name="name">
+                                </div>
+                            </div>*@
+                        <div class="form-group required">
+                            <div class="col-sm-12">
+                                <label for="input-review" class="control-label">بررسی شما</label>
+                                <textarea asp-for="Comment" class="form-control" id="input-review" rows="5"></textarea>
+                                @*<div class="help-block"><span class="text-danger">توجه :</span> HTML بازگردانی نخواهد شد!</div>*@
+                            </div>
+                        </div>
+                        <div>
+
+                            <input type="checkbox" asp-for="DisAgree" /><h> با این نظر مخالفم</h>
+
+                        </div>
+                        @*<div class="form-group required">
+                                <div class="col-sm-12">
+                                    <label class="control-label">رتبه</label>
+                                    &nbsp;&nbsp;&nbsp; بد&nbsp;
+                                    <input type="radio" value="1" name="rating">
+                                    &nbsp;
+                                    <input type="radio" value="2" name="rating">
+                                    &nbsp;
+                                    <input type="radio" value="3" name="rating">
+                                    &nbsp;
+                                    <input type="radio" value="4" name="rating">
+                                    &nbsp;
+                                    <input type="radio" value="5" name="rating">
+                                    &nbsp;خوب
+                                </div>
+                            </div>*@
+                        <div class="buttons">
+                            <div class="pull-right col-sm-6">
+                                <button class="btn btn-primary " id="button-review" type="submit">ثبت</button>
+
+                            </div>
+                            <div id="divResult" class="col-sm-6"></div>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+
+
+        </div>
+        <!--Middle Part End -->
+        <!--Right Part Start -->
+        <aside id="column-right" class="col-sm-3 hidden-xs">
+            <h3 class="subtitle">پرفروش ها</h3>
+            <div class="side-item">
+                <div class="product-thumb clearfix">
+                    <div class="image"><a href="product.html"><img src="image/product/apple_cinema_30-50x50.jpg" alt="تی شرت کتان مردانه" title="تی شرت کتان مردانه" class="img-responsive"></a></div>
+                    <div class="caption">
+                        <h4><a href="product.html">تی شرت کتان مردانه</a></h4>
+                        <p class="price"><span class="price-new">110000 تومان</span> <span class="price-old">122000 تومان</span> <span class="saving">-10%</span></p>
+                    </div>
+                </div>
+                <div class="product-thumb clearfix">
+                    <div class="image"><a href="product.html"><img src="image/product/iphone_1-50x50.jpg" alt="آیفون 7" title="آیفون 7" class="img-responsive"></a></div>
+                    <div class="caption">
+                        <h4><a href="product.html">آیفون 7</a></h4>
+                        <p class="price"> 2200000 تومان </p>
+                        <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span></div>
+                    </div>
+                </div>
+                <div class="product-thumb clearfix">
+                    <div class="image"><a href="product.html"><img src="image/product/macbook_1-50x50.jpg" alt="آیدیا پد یوگا" title="آیدیا پد یوگا" class="img-responsive"></a></div>
+                    <div class="caption">
+                        <h4><a href="product.html">آیدیا پد یوگا</a></h4>
+                        <p class="price"> 900000 تومان </p>
+                        <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> </div>
+                    </div>
+                </div>
+                <div class="product-thumb clearfix">
+                    <div class="image"><a href="product.html"><img src="image/product/sony_vaio_1-50x50.jpg" alt="کفش راحتی مردانه" title="کفش راحتی مردانه" class="img-responsive"></a></div>
+                    <div class="caption">
+                        <h4><a href="product.html">کفش راحتی مردانه</a></h4>
+                        <p class="price"> <span class="price-new">32000 تومان</span> <span class="price-old">12 میلیون تومان</span> <span class="saving">-25%</span> </p>
+                        <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> </div>
+                    </div>
+                </div>
+                <div class="product-thumb clearfix">
+                    <div class="image"><a href="product.html"><img src="image/product/FinePix-Long-Zoom-Camera-50x50.jpg" alt="دوربین فاین پیکس" title="دوربین فاین پیکس" class="img-responsive"></a></div>
+                    <div class="caption">
+                        <h4><a href="product.html">دوربین فاین پیکس</a></h4>
+                        <p class="price">122000 تومان</p>
+                    </div>
+                </div>
+            </div>
+            <div class="list-group">
+                <h3 class="subtitle">محتوای سفارشی</h3>
+                <p>این یک بلاک محتواست. هر نوع محتوایی شامل html، نوشته یا تصویر را میتوانید در آن قرار دهید. </p>
+                <p> در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد. </p>
+                <p>لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</p>
+            </div>
+            <h3 class="subtitle">ویژه</h3>
+            <div class="side-item">
+                <div class="product-thumb clearfix">
+                    <div class="image"><a href="product.html"><img src="image/product/macbook_pro_1-50x50.jpg" alt=" کتاب آموزش باغبانی " title=" کتاب آموزش باغبانی " class="img-responsive"></a></div>
+                    <div class="caption">
+                        <h4><a href="product.html">کتاب آموزش باغبانی</a></h4>
+                        <p class="price"> <span class="price-new">98000 تومان</span> <span class="price-old">120000 تومان</span> <span class="saving">-26%</span> </p>
+                    </div>
+                </div>
+                <div class="product-thumb clearfix">
+                    <div class="image"><a href="product.html"><img src="image/product/samsung_tab_1-50x50.jpg" alt="تبلت ایسر" title="تبلت ایسر" class="img-responsive"></a></div>
+                    <div class="caption">
+                        <h4><a href="product.html">تبلت ایسر</a></h4>
+                        <p class="price"> <span class="price-new">98000 تومان</span> <span class="price-old">240000 تومان</span> <span class="saving">-5%</span> </p>
+                        <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> </div>
+                    </div>
+                </div>
+                <div class="product-thumb clearfix">
+                    <div class="image"><a href="product.html"><img src="image/product/apple_cinema_30-50x50.jpg" alt="تی شرت کتان مردانه" title="تی شرت کتان مردانه" class="img-responsive"></a></div>
+                    <div class="caption">
+                        <h4><a href="http://demo.harnishdesign.net/opencart/marketshop/v1/index.php?route=product/product&amp;product_id=42">تی شرت کتان مردانه</a></h4>
+                        <p class="price"> <span class="price-new">110000 تومان</span> <span class="price-old">122000 تومان</span> <span class="saving">-10%</span> </p>
+                    </div>
+                </div>
+                <div class="product-thumb clearfix">
+                    <div class="image"><a href="product.html"><img src="image/product/nikon_d300_1-50x50.jpg" alt="دوربین دیجیتال حرفه ای" title="دوربین دیجیتال حرفه ای" class="img-responsive"></a></div>
+                    <div class="caption">
+                        <h4><a href="product.html">دوربین دیجیتال حرفه ای</a></h4>
+                        <p class="price"> <span class="price-new">92000 تومان</span> <span class="price-old">98000 تومان</span> <span class="saving">-6%</span> </p>
+                    </div>
+                </div>
+                <div class="product-thumb clearfix">
+                    <div class="image"><a href="product.html"><img src="image/product/nikon_d300_5-50x50.jpg" alt="محصولات مراقبت از مو" title="محصولات مراقبت از مو" class="img-responsive"></a></div>
+                    <div class="caption">
+                        <h4><a href="product.html">محصولات مراقبت از مو</a></h4>
+                        <p class="price"> <span class="price-new">66000 تومان</span> <span class="price-old">90000 تومان</span> <span class="saving">-27%</span> </p>
+                        <div class="rating"> <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span> </div>
+                    </div>
+                </div>
+                <div class="product-thumb clearfix">
+                    <div class="image"><a href="product.html"><img src="image/product/macbook_air_1-50x50.jpg" alt="لپ تاپ ایلین ور" title="لپ تاپ ایلین ور" class="img-responsive"></a></div>
+                    <div class="caption">
+                        <h4><a href="product.html">لپ تاپ ایلین ور</a></h4>
+                        <p class="price"> <span class="price-new">10 میلیون تومان</span> <span class="price-old">12 میلیون تومان</span> <span class="saving">-5%</span> </p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!--Right Part End -->
+    </div>
+</div>
+<script>
+    $(function () {
+        $('input.css-checkbox').change(function () {
+
+            var productId = $(this).attr('productId')
+            var status = $(this).prop('checked')
+            $.post('/product/ProductLike', { Productid: productId, Status: status }, function (x) {
+                $('h#NumLike').html(`${x.totallike}`)
+            })
+        })
+        $('a.a-button').click(function () {
+            let productid = $(this).attr('ProductId')
+            $.post('/Product/ProductCom', { ProductId: productid }, function (x) {
+                $(div1).html(x)
+            })
+        })
+
+
+    })
+</script>
+<script>
+
+    b1 = function (y) {
+
+
+        i = y.responseText;
+        if (i == "t") {
+
+            $(span1).html('با موفقیت ثبت شد.')
+            $(span1).parents('button').css({ background: 'green' })
+
+            setTimeout(function () {
+                $(span1).html('افزودن به سبد')
+                $(btn1).css({ background: 'steelblue' })
+            }, 2000)
+
+        }
+        else if (i == "b") {
+
+            $(span1).html('قبلا خریدید.')
+            $(span1).parents('button').css({ background: 'green' })
+
+            setTimeout(function () {
+                $(span1).html('افزودن به سبد')
+                $(btn1).css({ background: 'steelblue' })
+            }, 2000)
+
+        }
+        else {
+
+            $(span1).html('ناموفق')
+            $(span1).parents('button').css({ background: 'red' })
+
+            setTimeout(function () {
+                $(span1).html('افزودن به سبد')
+                $(btn1).css({ background: 'steelblue' })
+            }, 2000)
+
+        }
+    }
+
+
+    F1 = function (x) {
+        let i = x.responseText
+        if (i == "t") {
+            let productid = $('a.a-button').attr('ProductId')
+            $.post('/Product/ProductCom', { ProductId: productid }, function (x) {
+                $(div1).html(x)
+            })
+        }
+        else if (i == "f") {
+            $(divResult).html('ناموفق')
+            $(divResult).css({ background: 'red' })
+
+            setTimeout(function () {
+                $(divResult).remove()
+            }, 2000)
+
+        }
+        else if (i == "l") {
+            $(divResult).html('باید به سایت Login شوید .')
+            $(divResult).css({ background: 'red' })
+            setTimeout(function () {
+                $(divResult).remove()
+            }, 2000)
+        }
+
+    }
+</script>
+
+

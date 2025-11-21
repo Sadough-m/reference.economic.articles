@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "PaymentLevelOne";
+}
+    <div style="text-align:center">
+        <h1 >پرداخت</h1>
+    </div>
+<div class="container">
+    <!--header-->
+    <!--/header-->
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 m-t-xs-40">
+            <form method="post" action="https://ikc.shaparak.ir/TPayment/Payment/Index">
+                @*<form method="post" action="آدرس صفحه Ipg">*@
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>مقدار-ریال</label>
+                            @($"{ViewData["price"].ToString():0,0}")
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>توکن مشتری</label>
+                            <input id="token" name="token" value="@ViewBag.clientToken" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>شناسه پذیرنده</label>
+                            <input id="merchantId" name="merchantId" value="@ViewBag.merchantId" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="p1">شناسه پرداخت</label>
+                            <input id="PaymentId" name="PaymentId" class="form-control" value="@ViewBag.PaymentId" />@*random 4 digit*@
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success ben-block form-control">پرداخت</button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

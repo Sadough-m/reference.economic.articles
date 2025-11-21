@@ -1,0 +1,125 @@
+﻿
+@{
+    ViewData["Title"] = "CartProduct";
+}
+@model List<CartProduct>
+<div id="container">
+    <div class="container">
+        <!-- Breadcrumb Start-->
+        <ul class="breadcrumb">
+            <li><a href="index.html"><i class="fa fa-home"></i></a></li>
+            <li><a href="cart.html">سبد خرید</a></li>
+        </ul>
+        <!-- Breadcrumb End-->
+        <div class="row">
+            <!--Middle Part Start-->
+            <div id="content" class="col-sm-12">
+                <h1 class="title">سبد خرید</h1>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <td class="text-center">تصویر</td>
+                                <td class="text-left">نام محصول</td>
+                                <td class="text-left">دسته</td>
+                                <td class="text-left">تعداد</td>
+                                <td class="text-right">قیمت واحد</td>
+                                <td class="text-right">کل</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="text-center"><a href="product.html"><img src="@($"data:image/jpeg;base64,{Convert.ToBase64String(item.product.Img)}")" width="50" height="60" alt="تبلت ایسر" title="تبلت ایسر" class="img-thumbnail"></a></td>
+                                    <td class="text-left">
+                                        <a href="product.html">@item.product.Name</a><br>
+                                        @*<small>امتیازات خرید: 1000</small>*@
+                                    </td>
+                                    <td class="text-left">@item.product.group1.Name</td>
+                                    <td class="text-left col-md-2">
+                                        <div class="input-group btn-block quantity ">
+                                            <input id="CartProductCount" CartProductIdd="@item.Id" class="form-control input-number__input" type="number" name="quantity" value="@item.Count" max="@item.product.Count" min="1">
+                                            <span class="input-group-btn">
+                                                @*<button type="submit" data-toggle="tooltip" title="" class="btn btn-primary" data-original-title="بروزرسانی"><i class="fa fa-refresh"></i></button>*@
+                                                <button id="BtnRemoveFromeCartProduct" CartProductId="@item.Id" type="button" data-toggle="tooltip" title="" class="btn btn-danger" onclick="" data-original-title="حذف"><i class="fa fa-times-circle"></i></button>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="text-right">@($"{item.product.Price:0,0}") تومان</td>
+                                    <td class="text-right custom-control-input">@($"{item.product.Price * item.Count:0,0}") تومان</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <script src="~/lib/jquery/dist/jquery.js"></script>
+                <script>
+                    $(function () {
+                        $('input.input-number__input').change(function () {
+                            
+                            let id = $(this).attr('CartProductIdd');
+                            let count = $(this).val();
+                            var totalRow = $(this).parents('tr').find('td.custom-control-input');
+                            $.post('/Cart/ChangeCountOfProduct', { Id: id, Count: count }, function (value) {
+                                if (value.status == true) {
+                                    totalRow.html(`${value.tr} تومان`);
+                                    $('td#TotalF').html(`${value.totalprice} تومان`)
+                                    $('td#TotalF2').html(`${value.totalprice} تومان`)
+                                }
+                            })
+                        })
+
+
+                        $('td').on('click', '#BtnRemoveFromeCartProduct', function () {
+                            if (confirm("مطمئنی از سبد حذف شود؟") == true) {
+                                let id = $(this).attr('CartProductId');
+                                let parent = $(this).parents('tr');
+                                $.post('/Cart/RemoveProductFromCart', { Id: id }, function (value) {
+                                    if (value.status == true) {
+                                        
+                                        parent.remove();
+                                        $('td#TotalF').html(`${value.totalprice} تومان`)
+                                        $('td#TotalF2').html(`${value.totalprice} تومان`)
+                                    }
+                                })
+                            }
+                        })
+                    })
+
+                </script>
+
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-8">
+                        <table class="table table-bordered">
+                            <tbody>
+                                <tr>
+                                    <td class="text-right"><strong>جمع کل:</strong></td>
+                                    <td class="text-right" id="TotalF2">@ViewData["TotalFa"]</td>
+                                </tr>
+                                @*<tr>
+                                        <td class="text-right"><strong>کسر هدیه:</strong></td>
+                                        <td class="text-right">4000 تومان</td>
+                                    </tr>*@
+                                <tr>
+                                    <td class="text-right"><strong>مالیات:</strong></td>
+                                    <td class="text-right">0 تومان</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-right"><strong>قابل پرداخت :</strong></td>
+                                    <td class="text-right" id="TotalF">@ViewData["TotalFa"] </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="buttons">
+                    <div class="pull-left"><a asp-action="ProductList" asp-controller="Product" class="btn btn-default">ادامه خرید</a></div>
+                    <div class="pull-left"><a asp-action="PaymentLevelOne" asp-controller="Cart" class="btn btn-primary">تسویه حساب</a></div>
+                </div>
+            </div>
+            <!--Middle Part End -->
+        </div>
+    </div>
+</div>
+

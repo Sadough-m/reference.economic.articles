@@ -1,0 +1,9 @@
+﻿
+.field-validation-error {
+    color: red;
+}
+
+.input-validation-error {
+    /*background-color: hotpink;*/
+    border: 2px solid yellow;
+}

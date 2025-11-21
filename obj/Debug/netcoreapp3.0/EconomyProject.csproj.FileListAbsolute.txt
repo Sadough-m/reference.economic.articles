@@ -1,0 +1,4 @@
+C:\Users\Mohamad\source\repos\EconomyProject\EconomyProject\obj\Debug\netcoreapp3.0\EconomyProject.csprojAssemblyReference.cache
+C:\Users\Mohamad\source\repos\EconomyProject\EconomyProject\obj\Debug\netcoreapp3.0\EconomyProject.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Mohamad\source\repos\EconomyProject\EconomyProject\obj\Debug\netcoreapp3.0\EconomyProject.AssemblyInfoInputs.cache
+C:\Users\Mohamad\source\repos\EconomyProject\EconomyProject\obj\Debug\netcoreapp3.0\EconomyProject.AssemblyInfo.cs
